@@ -7,6 +7,9 @@ import ShowEmploy from './src/ShowEmploy';
 import { Provider } from 'react-redux';
 import store from './Redux/Store/store';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import persistStore from 'redux-persist/es/persistStore';
+import { PersistGate } from 'redux-persist/integration/react';
+let persister  = persistStore(store)
 const App = () => {
   if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental &&
@@ -16,12 +19,14 @@ const App = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: 'seashell' }}>
     <Provider store={store}>
+      <PersistGate persistor={persister}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="ShowEmploy" component={ShowEmploy} />
           <Stack.Screen name="AddEmploy" component={AddEmploy} />
         </Stack.Navigator>
       </NavigationContainer>
+      </PersistGate>
     </Provider>
 </GestureHandlerRootView>
   )

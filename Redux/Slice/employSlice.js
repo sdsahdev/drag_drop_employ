@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createSlice} from '@reduxjs/toolkit';
 
 const employSlice = createSlice({
@@ -7,22 +6,15 @@ const employSlice = createSlice({
     employ: [],
   },
   reducers: {
-      addEmploy: (state, action) => {
-        console.log("Current state:", state);
-          state.employ = [...state.employ, action.payload];
-      AsyncStorage.setItem('employ', JSON.stringify(state.employ));
+    addEmploy: (state, action) => {
+      state.employ.push(action.payload);
     },
 
     updateAllEmploy: (state, action) => {
-        if (action.payload) {
-            state.employ = [];
-            console.log(action.payload, "====updatedata");
-            state.employ = action.payload;
-        }
+      state.employ = action.payload;
     },
 
       deleteEmployById: (state, action) => {
-       
       state.employ = state.employ.filter(
         employee => employee.id !== action.payload,
       );
